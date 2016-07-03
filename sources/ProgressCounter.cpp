@@ -20,11 +20,11 @@ namespace pc
 	void ProgressCounter::Reset()
 	{
 		ConcurrencyLock lock( m_latch );
-		m_remains_part	= 1.0f;
-		m_goals_count	= shared_from_this().use_count();
+		m_remained_percent	= 1.0f;
+		m_goals_count		= shared_from_this().use_count();
 	};
 
-	ProgressCounter::SharedProgressGoal ProgressCounter::ExtractProgressPoint() const
+	ProgressCounter::SharedProgressGoal ProgressCounter::ProduceGoal() const
 	{
 		ConcurrencyLock lock( m_latch );
 		++m_goals_count;
@@ -37,7 +37,7 @@ namespace pc
 		auto shared_counter = shared_from_this();
 
 		// Proportionally decrease the part of remained progress.
-		m_remains_part = std::max( 0.0f, m_remains_part - m_remains_part / m_goals_count );
+		m_remained_percent = std::max( 0.0f, m_remained_percent - m_remained_percent / m_goals_count );
 		--m_goals_count;
 	};
 };
