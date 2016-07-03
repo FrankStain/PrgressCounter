@@ -1,0 +1,17 @@
+#pragma once
+
+// This headers are crucial for progress counter.
+#include <stdint.h>
+#include <cstdint>
+#include <memory>
+#include <mutex>
+
+
+namespace pc
+{
+	// Standard mutex. You have a spin lock? It welcome here!
+	using ConcurrencyLatch	= std::mutex;
+	
+	// Standard lock for mutex.
+	using ConcurrencyLock	= std::unique_lock<std::mutex>;
+};
