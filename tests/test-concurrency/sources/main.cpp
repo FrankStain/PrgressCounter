@@ -68,9 +68,9 @@ int main( int argc, char* argv[] )
 	std::mt19937 rnd_device( (uint32_t)time( 0 ) );
 	for( int32_t task_id = 0; task_id < 680; ++task_id )
 	{
-		auto point = counter->ProduceGoal();
+		auto goal = counter->ProduceGoal();
 		std::chrono::milliseconds interval{ 600 + rnd_device() % 1400 };
-		tasks.PushTask( { [point, interval](){ std::this_thread::sleep_for( interval ); } } );
+		tasks.PushTask( { [goal, interval](){ std::this_thread::sleep_for( interval ); } } );
 	};
 
 	// Produce the workers.
